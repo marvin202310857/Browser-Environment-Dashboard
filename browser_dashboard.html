@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Browser Environment Dashboard</title>
+    <style>
+        /* Embedded CSS for styling the dashboard */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0 20px 20px 20px;
+            color: #333;
+            transition: background-color 0.5s ease;
+        }
+        header {
+            background-color: #222;
+            color: #fff;
+            padding: 15px 20px;
+            text-align: center;
+            border-bottom: 4px solid #444;
+        }
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+        header .profile-info p {
+            margin: 2px 0;
+            font-size: 14px;
+        }
+        section {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #f5f5f5;
+        }
+        section h2 {
+            margin-top: 0;
+            border-bottom: 2px solid #666;
+            padding-bottom: 5px;
+        }
+        .info-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .info-list li {
+            margin: 6px 0;
+        }
+        button {
+            margin: 5px 10px 5px 0;
+            padding: 6px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #666;
+            border-radius: 4px;
+            background-color: #eee;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ddd;
+        }
+        #pageTitleDisplay {
+            font-weight: bold;
+        }
+    </style>
+    <!--
+    README:
+    This is the Browser Environment Dashboard.
+    It displays browser, screen, page, and navigation information using JavaScript browser objects.
+    Features:
+    - Profile information header
+    - Browser info (navigator, screen)
+    - Page info and controls (document, location, window)
+    - Navigation controls (history, location)
+    - Dynamic background color based on screen width (mobile, tablet, desktop)
+    -->
+</head>
+<body>
+    <header>
+        <h1>Profile Information</h1>
+        <div class="profile-info">
+            <p>Complete Name: MARVIN P. BUENDIA</p>
+            <p>Sex: MALE</p>
+            <p>Address: DANLOG, SAN JOSE, CAMARINES SUR</p>
+            <p>Course, Year, and Section: BSIT 2B</p>
+            <p>Name of School: PARTIDO STATE UNIVERSITY</p>
+            <p>Semester and Academic Year: AY 2024-2025</p>
+            <p>Subject Code and Title: PF2</p>
+            <p>Name of Subject Instructor: ARJAY ABIO</p>
+        </div>
+    </header>
+
+    <section id="browserInfo">
+        <h2>Part A: Browser Information</h2>
+        <ul class="info-list">
+            <li>Browser Name and Version: <span id="browserNameVersion"></span></li>
+            <li>Platform (OS): <span id="platform"></span></li>
+            <li>Java Enabled: <span id="javaEnabled"></span></li>
+            <li>Screen Resolution: <span id="screenResolution"></span></li>
+            <li>Available Screen Size: <span id="availableScreenSize"></span></li>
+            <li>Color Depth: <span id="colorDepth"></span></li>
+        </ul>
+    </section>
+
+    <section id="pageInfoControls">
+        <h2>Part B: Page Information and Controls</h2>
+        <ul class="info-list">
+            <li>Current URL: <span id="currentURL"></span></li>
+            <li>Hostname: <span id="hostname"></span></li>
+            <li>Page Title: <span id="pageTitleDisplay"></span></li>
+        </ul>
+        <button id="changeTitleBtn">Change Page Title</button>
+    </section>
+
+    <section id="navigationControls">
+        <h2>Part C: Navigation Controls</h2>
+        <button id="reloadBtn">Reload Page</button>
+        <button id="redirectBtn">Redirect to https://www.example.com</button>
+        <button id="backBtn">Go Back</button>
+        <button id="forwardBtn">Go Forward</button>
+    </section>
+
+    <script>
+        // JavaScript for Browser Environment Dashboard
+
+        // Part A: Display Browser Information
+        function displayBrowserInfo() {
+            const browserNameVersion = navigator.userAgent;
+            const platform = navigator.platform;
+            const javaEnabled = navigator.javaEnabled() ? "Yes" : "No";
+            const screenResolution = screen.width + " x " + screen.height;
+            const availableScreenSize = screen.availWidth + " x " + screen.availHeight;
+            const colorDepth = screen.colorDepth;
+
+            document.getElementById('browserNameVersion').textContent = browserNameVersion;
+            document.getElementById('platform').textContent = platform;
+            document.getElementById('javaEnabled').textContent = javaEnabled;
+            document.getElementById('screenResolution').textContent = screenResolution;
+            document.getElementById('availableScreenSize').textContent = availableScreenSize;
+            document.getElementById('colorDepth').textContent = colorDepth;
+        }
+
+        // Part B: Page Information and Controls
+        function displayPageInfo() {
+            document.getElementById('currentURL').textContent = document.location.href;
+            document.getElementById('hostname').textContent = document.location.hostname;
+            document.getElementById('pageTitleDisplay').textContent = document.title;
+        }
+
+        // Change page title dynamically
+        document.getElementById('changeTitleBtn').addEventListener('click', function() {
+            const newTitle = prompt("Enter a new page title:", document.title);
+            if (newTitle !== null && newTitle.trim() !== "") {
+                document.title = newTitle;
+                document.getElementById('pageTitleDisplay').textContent = newTitle;
+            }
+        });
+
+        // Part C: Navigation Controls
+        document.getElementById('reloadBtn').addEventListener('click', function() {
+            location.reload();
+        });
+
+        document.getElementById('redirectBtn').addEventListener('click', function() {
+            location.href = "https://www.example.com";
+        });
+
+        document.getElementById('backBtn').addEventListener('click', function() {
+            history.back();
+        });
+
+        document.getElementById('forwardBtn').addEventListener('click', function() {
+            history.forward();
+        });
+
+        // Part D: Dynamic Styling with Screen Info
+        function updateBackgroundColor() {
+            const width = window.innerWidth;
+            if (width < 600) {
+                document.body.style.backgroundColor = "blue";
+            } else if (width >= 600 && width <= 991) {
+                document.body.style.backgroundColor = "green";
+            } else {
+                document.body.style.backgroundColor = "orange";
+            }
+        }
+
+        // Initialize dashboard on page load
+        window.addEventListener('load', function() {
+            displayBrowserInfo();
+            displayPageInfo();
+            updateBackgroundColor();
+        });
+
+        // Update background color on window resize
+        window.addEventListener('resize', function() {
+            updateBackgroundColor();
+        });
+    </script>
+</body>
+</html>
